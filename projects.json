@@ -91,7 +91,9 @@
     "",
     ""
   ],
-  "images": [],
+ "images": [
+  "images/pharmacy.jpg"
+],
   "youtube": "",
   "instagram": "",
   "tags": []
