@@ -372,9 +372,9 @@ nav {
 }
 @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
 
-.card-img { width: 100%; height: 190px; object-fit: cover; display: block; background: var(--bg3); }
+.card-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; background: var(--bg3); }
 .card-img-placeholder {
-  width: 100%; height: 190px;
+  width: 100%; aspect-ratio: 16/9;
   background: linear-gradient(135deg, var(--bg2), var(--bg3));
   display: flex; align-items: center; justify-content: center;
   font-size: 3rem;
@@ -455,7 +455,7 @@ nav {
   transition: all 0.2s; z-index: 10;
 }
 .modal-close:hover { border-color: var(--accent); color: var(--accent); }
-.modal-img { width: 100%; height: 260px; object-fit: cover; border-radius: 16px 16px 0 0; display: block; }
+.modal-img { width: 100%; max-height: 420px; object-fit: contain; background: var(--bg3); border-radius: 16px 16px 0 0; display: block; }
 .modal-img-placeholder {
   width: 100%; height: 200px;
   background: linear-gradient(135deg, var(--bg2), var(--bg3));
@@ -951,7 +951,7 @@ function renderProjects(projects) {
 
 function getYoutubeId(url) {
   if (!url) return null;
-  const m = url.match(/(?:v=|youtu\.be\/|embed\/)([^&\n?#]+)/);
+  const m = url.match(/(?:v=|youtu\.be\/|embed\/|shorts\/)([^&\n?#]+)/);
   return m ? m[1] : null;
 }
 
