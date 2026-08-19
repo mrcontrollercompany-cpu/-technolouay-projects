@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الدورات التدريبية — TechnoLouay Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #050810;
+  --bg2: #090e1a;
+  --bg3: #0d1526;
+  --accent: #00d4ff;
+  --accent2: #7c3aed;
+  --accent3: #06ffa5;
+  --danger: #ff6b6b;
+  --text: #e2e8f0;
+  --muted: #64748b;
+  --card-bg: rgba(13,21,38,0.8);
+  --border: rgba(0,212,255,0.15);
+  --border-hover: rgba(0,212,255,0.4);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Cairo', sans-serif;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+  animation: gridMove 20s linear infinite;
+}
+@keyframes gridMove { 0% { background-position: 0 0; } 100% { background-position: 60px 60px; } }
+
+/* ===== NAV ===== */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 16px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(5,8,16,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.logo {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 2px;
+  text-shadow: 0 0 20px rgba(0,212,255,0.5);
+  cursor: pointer;
+  text-decoration: none;
+}
+.logo span { color: var(--accent3); }
+.nav-link {
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 8px 16px;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  transition: all 0.3s;
+}
+.nav-link:hover { color: var(--accent); border-color: var(--border-hover); }
+
+/* ===== PAGE HEADER ===== */
+.page-header {
+  position: relative;
+  z-index: 1;
+  padding: 130px 24px 50px;
+  text-align: center;
+}
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+}
+.orb-1 { width: 450px; height: 450px; background: radial-gradient(circle, rgba(0,212,255,0.14), transparent 70%); top: -120px; right: -80px; }
+.orb-2 { width: 380px; height: 380px; background: radial-gradient(circle, rgba(124,58,237,0.16), transparent 70%); top: -60px; left: -80px; }
+
+.page-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 18px;
+  border: 1px solid rgba(0,212,255,0.3);
+  border-radius: 100px;
+  font-size: 0.78rem;
+  color: var(--accent);
+  background: rgba(0,212,255,0.05);
+  margin-bottom: 22px;
+  letter-spacing: 0.5px;
+  position: relative;
+  z-index: 2;
+}
+.page-title {
+  font-family: 'Orbitron', monospace;
+  font-weight: 900;
+  font-size: clamp(1.7rem, 5vw, 2.7rem);
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 2;
+}
+.page-title span {
+  background: linear-gradient(135deg, var(--accent), var(--accent2), var(--accent3));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.page-desc {
+  color: var(--muted);
+  font-size: clamp(0.9rem, 2vw, 1.02rem);
+  line-height: 1.9;
+  max-width: 620px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* ===== COURSES GRID ===== */
+.courses-wrap { position: relative; z-index: 1; padding: 10px 24px 70px; }
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.course-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 26px 22px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.35s;
+}
+.course-card.available { cursor: pointer; }
+.course-card.available:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.4), 0 0 0 1px rgba(0,212,255,0.08);
+}
+.course-card.soon { opacity: 0.6; }
+.course-icon { font-size: 2.1rem; margin-bottom: 14px; }
+.course-badge {
+  position: absolute; top: 18px; left: 18px;
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.5px;
+  padding: 4px 12px; border-radius: 100px;
+}
+.course-badge.open { background: rgba(6,255,165,0.12); border: 1px solid rgba(6,255,165,0.35); color: var(--accent3); }
+.course-badge.soon { background: rgba(100,116,139,0.15); border: 1px solid rgba(100,116,139,0.35); color: var(--muted); }
+.course-name { font-size: 1.08rem; font-weight: 800; margin-bottom: 10px; line-height: 1.5; }
+.course-summary { font-size: 0.84rem; color: var(--muted); line-height: 1.8; margin-bottom: 16px; }
+.course-meta { display: flex; flex-wrap: wrap; gap: 8px; }
+.meta-chip {
+  padding: 4px 12px; background: rgba(0,212,255,0.07);
+  border: 1px solid rgba(0,212,255,0.15); border-radius: 100px;
+  font-size: 0.7rem; color: var(--accent);
+}
+.course-cta { margin-top: 18px; font-size: 0.8rem; color: var(--accent); display: flex; align-items: center; gap: 6px; }
+.course-card.available:hover .course-cta { gap: 10px; }
+
+/* ===== COURSE DETAIL ===== */
+.detail-wrap { position: relative; z-index: 1; padding: 30px 24px 20px; }
+.detail-inner { max-width: 880px; margin: 0 auto; }
+
+.detail-hero {
+  background: linear-gradient(135deg, rgba(0,212,255,0.08), rgba(124,58,237,0.08));
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 34px 30px;
+  margin-bottom: 28px;
+  position: relative;
+  overflow: hidden;
+}
+.detail-hero::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent3), transparent);
+}
+.detail-eyebrow { font-size: 0.75rem; color: var(--accent3); letter-spacing: 1.5px; margin-bottom: 10px; font-weight: 700; }
+.detail-title { font-family: 'Orbitron', monospace; font-weight: 900; font-size: clamp(1.3rem, 3.6vw, 1.9rem); margin-bottom: 12px; }
+.detail-title span {
+  background: linear-gradient(135deg, var(--accent), var(--accent3));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.detail-tagline { color: var(--muted); font-size: 0.92rem; line-height: 1.8; }
+
+.section-block { margin-bottom: 32px; }
+.section-heading {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 1.08rem; font-weight: 800; margin-bottom: 18px;
+  color: var(--text);
+}
+.section-heading .ico { font-size: 1.2rem; }
+.section-heading::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+/* FAQ info grid */
+.info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
+.info-card {
+  background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px;
+  padding: 16px 18px;
+}
+.info-q { font-size: 0.78rem; color: var(--accent); font-weight: 700; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+.info-a { font-size: 0.87rem; color: var(--text); line-height: 1.7; }
+
+/* Rules / notes box */
+.notes-box {
+  background: rgba(255,107,107,0.06);
+  border: 1px solid rgba(255,107,107,0.25);
+  border-radius: 12px;
+  padding: 18px 20px;
+}
+.notes-box ul { list-style: none; }
+.notes-box li { font-size: 0.87rem; line-height: 1.9; color: var(--text); display: flex; gap: 10px; align-items: flex-start; }
+.notes-box li::before { content: '⚠️'; flex-shrink: 0; }
+
+/* Skills list */
+.skills-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.skills-list li {
+  display: flex; align-items: flex-start; gap: 12px;
+  font-size: 0.9rem; line-height: 1.8; color: var(--text);
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 10px; padding: 12px 16px;
+}
+.skills-list li .check { color: var(--accent3); font-weight: 900; flex-shrink: 0; }
+.skills-summary {
+  margin-top: 14px; padding: 14px 18px;
+  background: rgba(6,255,165,0.06); border: 1px solid rgba(6,255,165,0.25);
+  border-radius: 10px; font-size: 0.88rem; color: var(--accent3); line-height: 1.8; font-weight: 600;
+}
+
+/* Curriculum */
+.curriculum-list { list-style: none; counter-reset: curriculum; display: flex; flex-direction: column; gap: 10px; }
+.curriculum-list li {
+  counter-increment: curriculum;
+  display: flex; align-items: flex-start; gap: 14px;
+  font-size: 0.89rem; line-height: 1.8; color: var(--text);
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 10px; padding: 12px 16px;
+}
+.curriculum-list li::before {
+  content: counter(curriculum);
+  flex-shrink: 0;
+  width: 26px; height: 26px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: var(--bg);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.75rem;
+}
+
+/* Details table */
+.details-table { display: flex; flex-direction: column; gap: 1px; background: var(--border); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+.details-row { display: flex; background: var(--card-bg); }
+.details-row .dt-label {
+  width: 160px; flex-shrink: 0; padding: 14px 18px;
+  font-size: 0.82rem; font-weight: 700; color: var(--accent);
+  background: rgba(0,212,255,0.04);
+  display: flex; align-items: center; gap: 8px;
+}
+.details-row .dt-value { flex: 1; padding: 14px 18px; font-size: 0.87rem; color: var(--text); line-height: 1.8; }
+@media (max-width: 560px) {
+  .details-row { flex-direction: column; }
+  .details-row .dt-label { width: 100%; }
+}
+
+.price-banner {
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+  background: linear-gradient(135deg, rgba(6,255,165,0.1), rgba(0,212,255,0.06));
+  border: 1px solid rgba(6,255,165,0.3);
+  border-radius: 14px;
+  padding: 22px 26px;
+  margin-top: 18px;
+}
+.price-tag { font-family: 'Orbitron', monospace; font-size: 1.8rem; font-weight: 900; color: var(--accent3); }
+.price-note { font-size: 0.8rem; color: var(--muted); }
+.btn-register {
+  padding: 13px 30px;
+  background: linear-gradient(135deg, var(--accent3), var(--accent));
+  color: var(--bg);
+  border: none; border-radius: 8px;
+  font-family: 'Cairo', sans-serif; font-size: 0.92rem; font-weight: 700;
+  cursor: pointer; text-decoration: none;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: all 0.3s; white-space: nowrap;
+}
+.btn-register:hover { transform: translateY(-2px); box-shadow: 0 8px 26px rgba(6,255,165,0.3); }
+
+.location-box {
+  display: flex; align-items: flex-start; gap: 14px;
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 12px; padding: 18px 20px;
+}
+.location-box .ico { font-size: 1.4rem; flex-shrink: 0; }
+.location-box .txt { font-size: 0.88rem; line-height: 1.8; color: var(--text); }
+.location-box .txt b { color: var(--accent); }
+
+/* ===== CERTIFICATE VERIFICATION (moved from index.html) ===== */
+.verify-wrap { position: relative; z-index: 1; padding: 20px 24px 90px; }
+.verify-card {
+  max-width: 640px; margin: 0 auto;
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 18px; padding: 44px 36px; text-align: center;
+  position: relative; overflow: hidden;
+}
+.verify-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent3), transparent);
+  opacity: 0.5;
+}
+.verify-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 5px 16px; border: 1px solid rgba(6,255,165,0.3); border-radius: 100px;
+  font-size: 0.75rem; color: var(--accent3); background: rgba(6,255,165,0.06);
+  margin-bottom: 18px; letter-spacing: 1px;
+}
+.verify-title { font-family: 'Orbitron', monospace; font-weight: 900; font-size: clamp(1.3rem, 3vw, 1.8rem); margin-bottom: 12px; }
+.verify-title span {
+  background: linear-gradient(135deg, var(--accent3), var(--accent));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.verify-desc { color: var(--muted); font-size: 0.9rem; line-height: 1.8; margin-bottom: 28px; }
+.verify-form { display: flex; gap: 10px; flex-wrap: wrap; }
+.verify-form input {
+  flex: 1; min-width: 200px; padding: 13px 18px;
+  background: var(--bg2); border: 1px solid var(--border); border-radius: 8px;
+  color: var(--text); font-family: 'Cairo', sans-serif; font-size: 0.92rem;
+  outline: none; text-align: center; letter-spacing: 0.5px; transition: border-color 0.3s;
+}
+.verify-form input::placeholder { color: var(--muted); }
+.verify-form input:focus { border-color: var(--accent3); box-shadow: 0 0 20px rgba(6,255,165,0.12); }
+.btn-verify {
+  padding: 13px 30px;
+  background: linear-gradient(135deg, var(--accent3), var(--accent));
+  color: var(--bg); border: none; border-radius: 8px;
+  font-family: 'Cairo', sans-serif; font-size: 0.92rem; font-weight: 700;
+  cursor: pointer; transition: all 0.3s; white-space: nowrap;
+}
+.btn-verify:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(6,255,165,0.3); }
+.verify-hint { font-size: 0.72rem; color: var(--muted); margin-top: 14px; }
+.verify-result { max-width: 640px; margin: 22px auto 0; display: none; }
+.verify-result.show { display: block; animation: fadeUp 0.4s ease both; }
+.verify-result-frame-wrap {
+  position: relative; border-radius: 14px; overflow: hidden;
+  border: 1px solid var(--border); background: #fff; min-height: 420px;
+}
+.verify-result-frame-wrap.scanning::after {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent3), transparent);
+  animation: scan 1.6s linear infinite; z-index: 2;
+}
+.verify-result iframe { width: 100%; height: 560px; border: none; display: block; opacity: 0; transition: opacity 0.3s; }
+.verify-loading {
+  position: absolute; inset: 0; display: none;
+  align-items: center; justify-content: center; flex-direction: column; gap: 14px;
+  background: var(--bg2); color: var(--muted); font-size: 0.85rem;
+}
+.verify-loading.show { display: flex; }
+.verify-spinner {
+  width: 34px; height: 34px; border: 3px solid rgba(6,255,165,0.15);
+  border-top-color: var(--accent3); border-radius: 50%; animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.verify-openlink {
+  display: inline-flex; align-items: center; gap: 6px; margin-top: 12px;
+  font-size: 0.78rem; color: var(--muted); text-decoration: none; transition: color 0.3s;
+}
+.verify-openlink:hover { color: var(--accent3); }
+@keyframes scan { 0%{top:0%} 100%{top:100%} }
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+/* ===== FOOTER ===== */
+footer {
+  position: relative; z-index: 1;
+  border-top: 1px solid var(--border);
+  padding: 24px 32px; text-align: center;
+  background: rgba(5,8,16,0.6);
+}
+.footer-logo { font-family: 'Orbitron', monospace; font-size: 0.9rem; color: var(--accent); letter-spacing: 2px; margin-bottom: 8px; }
+.footer-copy { font-size: 0.72rem; color: var(--muted); }
+
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+@media (max-width: 600px) {
+  nav { padding: 14px 18px; }
+  .page-header { padding: 110px 18px 40px; }
+  .verify-card { padding: 32px 22px; }
+  .verify-form { flex-direction: column; }
+  .btn-verify { width: 100%; justify-content: center; }
+  .details-row .dt-label { font-size: 0.78rem; }
+  .price-banner { flex-direction: column; align-items: stretch; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="logo">TECHNO<span>LOUAY</span></a>
+  <a href="index.html" class="nav-link">← الصفحة الرئيسية</a>
+</nav>
+
+<!-- PAGE HEADER -->
+<section class="page-header">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <span class="page-tag">🎓 أكاديمية TechnoLouay</span>
+  <h1 class="page-title">الدورات <span>التدريبية</span></h1>
+  <p class="page-desc">
+    دورات عملية بالكامل، بمجموعات مصغّرة، وشهادة تدريب موثّقة يمكن التحقق منها عالمياً.
+    اختر الدورة التي تناسبك من القائمة أدناه.
+  </p>
+</section>
+
+<!-- COURSES GRID -->
+<section class="courses-wrap">
+  <div class="courses-grid">
+
+    <div class="course-card available" onclick="document.getElementById('plc-level-1').scrollIntoView({behavior:'smooth', block:'start'})">
+      <span class="course-badge open">التفاصيل متوفرة</span>
+      <div class="course-icon">🎛️</div>
+      <div class="course-name">برمجة PLC — المستوى الأول</div>
+      <p class="course-summary">دورة حضورية 100% عملية على PLC Delta بلغة Ladder، تبدأ من الصفر وتؤهلك لتنفيذ أنظمة تحكم صناعي أساسية.</p>
+      <div class="course-meta">
+        <span class="meta-chip">حضورية</span>
+        <span class="meta-chip">12 جلسة</span>
+        <span class="meta-chip">4 طلاب فقط</span>
+      </div>
+      <div class="course-cta">عرض التفاصيل الكاملة ←</div>
+    </div>
+
+    <div class="course-card soon">
+      <span class="course-badge soon">قريباً</span>
+      <div class="course-icon">🧠</div>
+      <div class="course-name">برمجة PLC — المستوى المتقدم</div>
+      <p class="course-summary">استكمال لمنهاج المستوى الأول بمشاريع تحكم صناعي أكثر تعقيداً. تفاصيل هذه الدورة ستُنشر قريباً.</p>
+      <div class="course-meta">
+        <span class="meta-chip">حضورية</span>
+        <span class="meta-chip">يتطلب اجتياز المستوى الأول</span>
+      </div>
+      <div class="course-cta" style="color:var(--muted);">التفاصيل قريباً</div>
+    </div>
+
+    <div class="course-card soon">
+      <span class="course-badge soon">قريباً</span>
+      <div class="course-icon">🔧</div>
+      <div class="course-name">برمجة Arduino</div>
+      <p class="course-summary">دورة عملية للتعامل مع Arduino من الأساسيات وحتى بناء مشاريع تفاعلية متكاملة. تفاصيل هذه الدورة ستُنشر قريباً.</p>
+      <div class="course-meta">
+        <span class="meta-chip">حضورية</span>
+      </div>
+      <div class="course-cta" style="color:var(--muted);">التفاصيل قريباً</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= PLC LEVEL 1 — FULL DETAIL ================= -->
+<section class="detail-wrap" id="plc-level-1">
+  <div class="detail-inner">
+
+    <div class="detail-hero">
+      <div class="detail-eyebrow">🎛️ PLC PROGRAMMING — المستوى الأول</div>
+      <h2 class="detail-title">دورة برمجة <span>PLC Delta</span> — المستوى الأول</h2>
+      <p class="detail-tagline">
+        دورة حضورية عملية بالكامل، تنطلق من الصفر وتؤهلك لكتابة وتوصيل وتجربة أنظمة تحكم صناعي أساسية باستخدام PLC Delta ولغة Ladder.
+      </p>
+    </div>
+
+    <!-- FAQ Info Grid -->
+    <div class="section-block">
+      <div class="section-heading"><span class="ico">❓</span> أسئلة سريعة عن الدورة</div>
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-q">👶 هل الدورة مناسبة للمبتدئين؟</div>
+          <div class="info-a">نعم، الدورة مصممة لتبدأ من الصفر.</div>
+        </div>
+        <div class="info-card">
+          <div class="info-q">🛠️ هل يوجد تطبيق عملي؟</div>
+          <div class="info-a">الدورة بأكملها تطبيق عملي.</div>
+        </div>
+        <div class="info-card">
+          <div class="info-q">📋 هل أحتاج خبرة سابقة؟</div>
+          <div class="info-a">فقط أسس كهرباء واساسيات العمل على الحاسب.</div>
+        </div>
+        <div class="info-card">
+          <div class="info-q">📍 حضورية أم أونلاين؟</div>
+          <div class="info-a">حضورية بالكامل.</div>
+        </div>
+        <div class="info-card">
+          <div class="info-q">🎛️ ما نوع الـPLC المستخدم؟</div>
+          <div class="info-a">PLC من نوع Delta.</div>
+        </div>
+        <div class="info-card">
+          <div class="info-q">💻 ما لغة البرمجة المستخدمة؟</div>
+          <div class="info-a">لغة Ladder.</div>
+        </div>
+        <div class="info-card">
+          <div class="info-q">🔢 كم مستوى لبرمجة PLC؟</div>
+          <div class="info-a">مستويان: مستوى أول ومستوى متقدم.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Start conditions -->
+    <div class="section-block">
+      <div class="section-heading"><span class="ico">⏳</span> آلية بدء الدورة والتثبيت</div>
+      <div class="notes-box">
+        <ul>
+          <li>تبدأ الدورة فقط عند اكتمال عدد الطلاب المثبتين، وهو 4 طلاب.</li>
+          <li>لا يمكن تحديد موعد ثابت لبدء الدورة — البدء مرتبط حصراً باكتمال العدد.</li>
+          <li>لا يمكن الانسحاب بعد التثبيت لأي سبب كان.</li>
+          <li>التسجيل والتثبيت يكونان حصراً قبل بداية الدورة، ولا يوجد تسجيل في اليوم الأول.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- What you learn -->
+    <div class="section-block">
+      <div class="section-heading"><span class="ico">🎯</span> شو بتتعلم وشو بتقدر تعمل بعد الدورة؟</div>
+      <ul class="skills-list">
+        <li><span class="check">✓</span> تكتب برامج PLC أساسية من الصفر.</li>
+        <li><span class="check">✓</span> تتحكم بالمحركات وتشغّلها وتوقفها حسب شروط محددة.</li>
+        <li><span class="check">✓</span> تربط وتستخدم الحساسات مع الـPLC.</li>
+        <li><span class="check">✓</span> تنفّذ دوائر تحكم صناعي تعتمد على المؤقتات والعدادات.</li>
+        <li><span class="check">✓</span> تتعامل مع البيانات داخل برنامج الـPLC.</li>
+        <li><span class="check">✓</span> تفهم وتحلل برامج PLC البسيطة وتكتشف الأخطاء فيها.</li>
+        <li><span class="check">✓</span> تبدأ بتنفيذ مشاريع تحكم صناعي عملية وتكون جاهزاً للانتقال إلى المستوى المتقدم.</li>
+      </ul>
+      <div class="skills-summary">
+        باختصار: من شخص ما عنده خبرة بالـPLC ← إلى شخص قادر على فهم، برمجة، توصيل، وتجربة أنظمة PLC الأساسية عملياً.
+      </div>
+    </div>
+
+    <!-- Curriculum -->
+    <div class="section-block">
+      <div class="section-heading"><span class="ico">📚</span> المنهاج التفصيلي</div>
+      <ol class="curriculum-list">
+        <li>فهم الـPLC وطريقة عمله والمداخل والمخارج.</li>
+        <li>برمجة وتشغيل محرك 3 فاز باستخدام الإنفيرتر.</li>
+        <li>التعامل مع الحساسات الصناعية الأساسية.</li>
+        <li>بناء برامج باستخدام AND / OR / XOR.</li>
+        <li>استخدام SET / RST وSelf-Holding والذواكر الداخلية.</li>
+        <li>استخدام Timers وCounters.</li>
+        <li>التعامل مع Data Registers والعمليات الحسابية والمقارنة ونقل البيانات.</li>
+        <li>حماية برامج الـPLC.</li>
+        <li>تطبيق تمارين عملية تحاكي أنظمة تحكم صناعي حقيقية.</li>
+      </ol>
+    </div>
+
+    <!-- Course details table -->
+    <div class="section-block">
+      <div class="section-heading"><span class="ico">📌</span> تفاصيل الدورة</div>
+      <div class="details-table">
+        <div class="details-row">
+          <div class="dt-label">👨‍🏫 المدرّب</div>
+          <div class="dt-value">مدير الأكاديمية — الأستاذ لؤي كلثوم</div>
+        </div>
+        <div class="details-row">
+          <div class="dt-label">⏰ أوقات الدورة</div>
+          <div class="dt-value">صباحية: 10:30 – 12:00 &nbsp;|&nbsp; مسائية: 5:00 – 6:30</div>
+        </div>
+        <div class="details-row">
+          <div class="dt-label">📅 مدة الدورة</div>
+          <div class="dt-value">12 جلسة (كل جلسة ساعة ونصف) — يومياً عدا الاثنين والجمعة</div>
+        </div>
+        <div class="details-row">
+          <div class="dt-label">👥 عدد الطلاب</div>
+          <div class="dt-value">4 طلاب فقط (تدريب مكثّف)</div>
+        </div>
+        <div class="details-row">
+          <div class="dt-label">✅ متطلبات الدورة</div>
+          <div class="dt-value">معرفة استخدام الحاسب، ووجود لابتوب مع الطالب</div>
+        </div>
+        <div class="details-row">
+          <div class="dt-label">🏆 الشهادة</div>
+          <div class="dt-value">شهادة تدريب موثقة يمكن التحقق منها عالمياً</div>
+        </div>
+        <div class="details-row">
+          <div class="dt-label">💳 طريقة التسجيل</div>
+          <div class="dt-value">الدفع كامل قبل بداية الدورة عبر شام كاش، أو بزيارة المكتب بعد حجز موعد</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Important notes -->
+    <div class="section-block">
+      <div class="section-heading"><span class="ico">⚠️</span> ملاحظات هامة</div>
+      <div class="notes-box">
+        <ul>
+          <li>تثبيت المقعد يكون بعد الدفع فقط.</li>
+          <li>بدء الدورة عند اكتمال العدد.</li>
+          <li>لا يوجد انسحاب بعد الحجز.</li>
+          <li>الدفع كامل بالدولار حصراً (لا يوجد دفعات).</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Price + register -->
+    <div class="section-block">
+      <div class="price-banner">
+        <div>
+          <div class="price-tag">70$</div>
+          <div class="price-note">تكلفة الدورة الكاملة — دفعة واحدة كاملة</div>
+        </div>
+        <a href="https://wa.me/963961119026" target="_blank" class="btn-register">📞 للتسجيل والاستفسار</a>
+      </div>
+    </div>
+
+    <!-- Location -->
+    <div class="section-block">
+      <div class="section-heading"><span class="ico">📍</span> المكان والتواصل</div>
+      <div class="location-box" style="margin-bottom:12px;">
+        <span class="ico">📍</span>
+        <div class="txt"><b>العنوان:</b> دمشق – المزة أوتوستراد، قبل حلويات Bee، بناء الكهرباء، الطابق الثامن</div>
+      </div>
+      <div class="location-box">
+        <span class="ico">📞</span>
+        <div class="txt"><b>للتسجيل أو الاستفسار:</b> 0961119026 — يومياً عدا الجمعة (10 صباحاً – 8 مساءً)</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CERTIFICATE VERIFICATION -->
+<section class="verify-wrap" id="verify">
+  <div class="verify-card">
+    <span class="verify-tag">🛡️ نظام توثيق رسمي</span>
+    <h2 class="verify-title">تحقق من صحة <span>شهادتك</span></h2>
+    <p class="verify-desc">
+      أدخل رقم الشهادة المطبوع عليها أو بجانب رمز QR للتأكد من صدورها عن TechnoLouay Academy.
+    </p>
+    <form class="verify-form" onsubmit="verifyCertificate(event)">
+      <input type="text" id="certId" placeholder="مثال: TLA-2026-080524" autocomplete="off">
+      <button type="submit" class="btn-verify">🔍 تحقق الآن</button>
+    </form>
+    <div class="verify-hint">الرقم موجود أسفل الشهادة أو ضمن رمز QR الخاص بها</div>
+  </div>
+
+  <div class="verify-result" id="certResultWrap">
+    <div class="verify-result-frame-wrap" id="certFrameWrap">
+      <div class="verify-loading show" id="certLoading">
+        <div class="verify-spinner"></div>
+        <span>جارِ التحقق من الشهادة...</span>
+      </div>
+      <iframe id="certFrame" title="نتيجة التحقق من الشهادة"></iframe>
+    </div>
+    <a href="#" target="_blank" id="certOpenNew" class="verify-openlink">فتح النتيجة بنافذة منفصلة ↗</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">TECHNOLOUAY</div>
+  <div class="footer-copy">© 2025 TechnoLouay Academy · جميع الحقوق محفوظة</div>
+</footer>
+
+<script>
+// ===== CERTIFICATE VERIFICATION =====
+const CERT_VERIFY_URL = 'https://script.google.com/macros/s/AKfycbxwxJ77_g5KBCgm98t28f1HQkjf9rAKbrUREKkx3XOwi0kIiCyNGfe5sixe_qS7MwQ/exec';
+
+function verifyCertificate(e, presetId) {
+  if (e) e.preventDefault();
+  const input = document.getElementById('certId');
+  const id = (presetId || input.value).trim();
+  if (!id) { input.focus(); return; }
+  input.value = id;
+
+  const url = CERT_VERIFY_URL + '?id=' + encodeURIComponent(id);
+  const wrap = document.getElementById('certResultWrap');
+  const frameWrap = document.getElementById('certFrameWrap');
+  const loading = document.getElementById('certLoading');
+  const iframe = document.getElementById('certFrame');
+  const openNew = document.getElementById('certOpenNew');
+
+  wrap.classList.add('show');
+  frameWrap.classList.add('scanning');
+  loading.classList.add('show');
+  iframe.style.opacity = '0';
+  openNew.href = url;
+
+  iframe.onload = () => {
+    loading.classList.remove('show');
+    frameWrap.classList.remove('scanning');
+    iframe.style.opacity = '1';
+  };
+  iframe.src = url;
+
+  wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// Auto-verify if the page was opened via a certificate link, e.g. ?cert=TLA-2026-080524
+(function checkCertFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  const certParam = params.get('cert') || params.get('id');
+  if (certParam) verifyCertificate(null, certParam);
+})();
+
+// If the page was opened with #plc-level-1 or ?course=plc1, jump straight to the detail section
+(function jumpToCourseFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  if (window.location.hash === '#plc-level-1' || params.get('course') === 'plc1') {
+    document.getElementById('plc-level-1').scrollIntoView({ block: 'start' });
+  }
+})();
+</script>
+
+</body>
+</html>
