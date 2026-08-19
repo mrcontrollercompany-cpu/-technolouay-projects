@@ -315,17 +315,17 @@ footer {
       <div class="course-cta">عرض التفاصيل الكاملة ←</div>
     </a>
 
-    <div class="course-card soon">
-      <span class="course-badge soon">قريباً</span>
+    <a href="plc-level-2.html" class="course-card available">
+      <span class="course-badge open">التفاصيل متوفرة</span>
       <div class="course-icon">🧠</div>
       <div class="course-name">برمجة PLC — المستوى المتقدم</div>
-      <p class="course-summary">استكمال لمنهاج المستوى الأول بمشاريع تحكم صناعي أكثر تعقيداً. تفاصيل هذه الدورة ستُنشر قريباً.</p>
+      <p class="course-summary">استكمال لمنهاج المستوى الأول: HMI، إشارات تمثيلية، إنفرتر، محركات خطوية، وتحكم عن بُعد — لتنفيذ مشروع صناعي متكامل.</p>
       <div class="course-meta">
         <span class="meta-chip">حضورية</span>
         <span class="meta-chip">يتطلب اجتياز المستوى الأول</span>
       </div>
-      <div class="course-cta" style="color:var(--muted);">التفاصيل قريباً</div>
-    </div>
+      <div class="course-cta">عرض التفاصيل الكاملة ←</div>
+    </a>
 
     <div class="course-card soon">
       <span class="course-badge soon">قريباً</span>
@@ -413,8 +413,3 @@ function verifyCertificate(e, presetId) {
   const params = new URLSearchParams(window.location.search);
   const certParam = params.get('cert') || params.get('id');
   if (certParam) verifyCertificate(null, certParam);
-})();
-</script>
-
-</body>
-</html>
