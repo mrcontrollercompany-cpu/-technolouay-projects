@@ -494,6 +494,94 @@ nav {
 .btn-ig { background: rgba(225,48,108,0.1); border: 1px solid rgba(225,48,108,0.3); color: #e1306c; }
 .btn-ig:hover { background: rgba(225,48,108,0.2); border-color: #e1306c; }
 
+/* ===== COURSES SECTION ===== */
+.section-tag.tag-purple {
+  border-color: rgba(124,58,237,0.3);
+  color: #a78bfa;
+  background: rgba(124,58,237,0.06);
+}
+.dot-purple { background: var(--accent2); box-shadow: 0 0 8px var(--accent2); }
+.filter-btn.active.fb-purple { background: var(--accent2); border-color: var(--accent2); color: #fff; box-shadow: 0 0 14px rgba(124,58,237,0.35); }
+
+.card-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.meta-chip {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 10px; background: rgba(124,58,237,0.08);
+  border: 1px solid rgba(124,58,237,0.22); border-radius: 100px;
+  font-size: 0.68rem; color: #a78bfa;
+}
+.has-curriculum { font-size: 0.72rem; color: #a78bfa; display: flex; align-items: center; gap: 4px; }
+.has-reviews { font-size: 0.72rem; color: #fbbf24; display: flex; align-items: center; gap: 4px; }
+
+/* Course modal */
+.course-gallery { display: flex; gap: 8px; overflow-x: auto; padding: 16px 16px 0; }
+.course-gallery::-webkit-scrollbar { height: 5px; }
+.course-gallery::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+.course-gallery img { height: 190px; flex: 0 0 auto; border-radius: 10px; object-fit: cover; border: 1px solid var(--border); }
+
+.course-meta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+.meta-chip-lg {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 16px; background: rgba(124,58,237,0.07);
+  border: 1px solid rgba(124,58,237,0.22); border-radius: 100px;
+  font-size: 0.8rem; color: #a78bfa; font-weight: 600;
+}
+
+.course-tabs {
+  display: flex; gap: 24px; border-bottom: 1px solid var(--border);
+  margin-bottom: 22px; overflow-x: auto;
+}
+.tab-btn {
+  background: none; border: none; padding: 10px 2px 12px;
+  color: var(--muted); font-family: 'Cairo', sans-serif; font-size: 0.88rem;
+  font-weight: 700; cursor: pointer; position: relative; white-space: nowrap;
+  transition: color 0.25s;
+}
+.tab-btn:hover { color: var(--text); }
+.tab-btn.active { color: #a78bfa; }
+.tab-btn.active::after {
+  content: ''; position: absolute; bottom: -1px; inset-inline-start: 0; inset-inline-end: 0;
+  height: 2px; background: var(--accent2); border-radius: 2px;
+}
+.tab-panel { display: none; }
+.tab-panel.active { display: block; animation: fadeUp 0.35s ease both; }
+.tab-empty { color: var(--muted); font-size: 0.85rem; padding: 18px 0; text-align: center; }
+
+.curriculum-module {
+  border: 1px solid var(--border); border-radius: 10px;
+  margin-bottom: 10px; overflow: hidden; background: rgba(124,58,237,0.03);
+}
+.curriculum-module summary {
+  padding: 14px 16px; cursor: pointer; font-weight: 700; font-size: 0.9rem;
+  color: var(--text); list-style: none; display: flex; align-items: center;
+  justify-content: space-between; gap: 10px;
+}
+.curriculum-module summary::-webkit-details-marker { display: none; }
+.curriculum-module summary::after {
+  content: '⌄'; color: var(--accent2); font-size: 1.1rem; flex-shrink: 0;
+  transition: transform 0.25s;
+}
+.curriculum-module[open] summary::after { transform: rotate(180deg); }
+.curriculum-topics { margin: 0; padding: 0 16px 14px; list-style: none; }
+.curriculum-topics li {
+  padding: 8px 0; padding-inline-start: 20px; position: relative;
+  font-size: 0.85rem; color: var(--muted); border-top: 1px solid rgba(255,255,255,0.05);
+}
+.curriculum-topics li:first-child { border-top: none; }
+.curriculum-topics li::before { content: '▹'; position: absolute; inset-inline-start: 0; color: var(--accent2); }
+
+.review-card {
+  background: var(--bg2); border: 1px solid var(--border); border-radius: 12px;
+  padding: 16px 18px; margin-bottom: 12px;
+}
+.review-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+.review-name { font-weight: 700; font-size: 0.88rem; color: var(--text); }
+.review-stars { color: #fbbf24; font-size: 0.82rem; letter-spacing: 2px; white-space: nowrap; }
+.review-text { font-size: 0.85rem; color: var(--muted); line-height: 1.85; }
+
+.testimonial-video { margin-bottom: 22px; }
+.testimonial-video-title { font-size: 0.85rem; font-weight: 700; color: #a78bfa; margin-bottom: 8px; }
+
 /* ===== SECONDARY HERO BUTTON ===== */
 .hero-cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 .btn-secondary {
@@ -517,6 +605,28 @@ nav {
   border-color: var(--accent3);
   transform: translateY(-3px);
   box-shadow: 0 8px 30px rgba(6,255,165,0.2);
+}
+.btn-tertiary {
+  padding: 14px 36px;
+  background: transparent;
+  color: #a78bfa;
+  border: 1px solid rgba(124,58,237,0.4);
+  border-radius: 8px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s;
+}
+.btn-tertiary:hover {
+  background: rgba(124,58,237,0.1);
+  border-color: var(--accent2);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(124,58,237,0.25);
 }
 
 /* ===== CERTIFICATE VERIFICATION ===== */
@@ -769,6 +879,7 @@ footer {
     </div>
     <div class="hero-cta">
       <a href="#projects" class="btn-explore">🚀 استعرض المشاريع</a>
+      <a href="#courses" class="btn-tertiary">🎓 الدورات التدريبية</a>
       <a href="#verify" class="btn-secondary">📜 تحقق من شهادة</a>
     </div>
   </div>
@@ -812,6 +923,40 @@ footer {
   <div class="modal" id="modal">
     <button class="modal-close" onclick="closeModal()">✕</button>
     <div id="modalContent"></div>
+  </div>
+</div>
+
+<!-- COURSES -->
+<section class="projects-wrap" id="courses">
+  <div class="section-head">
+    <span class="section-tag tag-purple"><span class="dot-live dot-purple"></span> دورات تدريبية متاحة</span>
+    <h2 class="section-title">الدورات <span>التدريبية</span></h2>
+  </div>
+
+  <div class="filters-wrap">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchInputCourses" placeholder="ابحث عن دورة..." oninput="filterCourses()">
+    </div>
+    <div class="filter-tabs" id="filterTabsCourses">
+      <button class="filter-btn active fb-purple" onclick="setCourseFilter('الكل', this)">الكل</button>
+    </div>
+  </div>
+
+  <div class="projects-count">عرض <span id="countNumCourses">0</span> دورة</div>
+  <div class="grid" id="coursesGrid">
+    <div class="no-results" id="noResultsCourses">
+      <div class="no-results-icon">🎓</div>
+      <p>لا توجد دورات منشورة حالياً — تابعنا فالمزيد قريباً</p>
+    </div>
+  </div>
+</section>
+
+<!-- COURSE MODAL -->
+<div class="modal-overlay" id="courseModalOverlay" onclick="closeCourseModalOutside(event)">
+  <div class="modal" id="courseModal">
+    <button class="modal-close" onclick="closeCourseModal()">✕</button>
+    <div id="courseModalContent"></div>
   </div>
 </div>
 
@@ -1030,12 +1175,221 @@ function verifyCertificate(e, presetId) {
 function goHome() {
   currentFilter = 'الكل';
   document.getElementById('searchInput').value = '';
-  document.querySelectorAll('.filter-btn').forEach((b,i) => b.classList.toggle('active', i === 0));
+  document.querySelectorAll('#filterTabs .filter-btn').forEach((b,i) => b.classList.toggle('active', i === 0));
   filterProjects();
+
+  currentCourseFilter = 'الكل';
+  document.getElementById('searchInputCourses').value = '';
+  document.querySelectorAll('#filterTabsCourses .filter-btn').forEach((b,i) => {
+    b.classList.toggle('active', i === 0);
+    b.classList.toggle('fb-purple', i === 0);
+  });
+  filterCourses();
+
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeCourseModal(); } });
+
+// ===== COURSES =====
+let allCourses = [];
+let currentCourseFilter = 'الكل';
+let courseFiltersBuilt = false;
+
+function courseDescText(c){
+  if (Array.isArray(c.description)) return c.description.join('\n');
+  return c.description || '';
+}
+function courseDescHTML(c){
+  return esc(courseDescText(c)).replace(/\n/g, '<br>');
+}
+function starsHTML(rating){
+  const n = Math.max(0, Math.min(5, Math.round(Number(rating) || 0)));
+  return '★'.repeat(n) + '☆'.repeat(5 - n);
+}
+
+async function loadCourses() {
+  try {
+    const res = await fetch('courses.json?v=' + Date.now());
+    if (!res.ok) throw new Error('missing');
+    allCourses = await res.json();
+    buildCourseFilters();
+    filterCourses();
+  } catch(e) {
+    document.getElementById('coursesGrid').innerHTML =
+      `<div class="no-results show"><div class="no-results-icon">🎓</div><p>لا توجد دورات منشورة حالياً — تابعنا فالمزيد قريباً</p></div>`;
+    document.getElementById('countNumCourses').textContent = 0;
+  }
+}
+
+function buildCourseFilters() {
+  if (courseFiltersBuilt) return;
+  const cats = [...new Set(allCourses.map(c => c.category).filter(Boolean))];
+  if (!cats.length) return;
+  const wrap = document.getElementById('filterTabsCourses');
+  wrap.innerHTML = `<button class="filter-btn active fb-purple" onclick="setCourseFilter('الكل', this)">الكل</button>` +
+    cats.map(c => `<button class="filter-btn" onclick="setCourseFilter('${esc(c)}', this)">${esc(c)}</button>`).join('');
+  courseFiltersBuilt = true;
+}
+
+function setCourseFilter(cat, btn) {
+  currentCourseFilter = cat;
+  document.querySelectorAll('#filterTabsCourses .filter-btn').forEach(b => {
+    b.classList.remove('active', 'fb-purple');
+  });
+  btn.classList.add('active', 'fb-purple');
+  filterCourses();
+}
+
+function filterCourses() {
+  const q = document.getElementById('searchInputCourses').value.trim().toLowerCase();
+  let filtered = allCourses;
+  if (currentCourseFilter !== 'الكل') filtered = filtered.filter(c => c.category === currentCourseFilter);
+  if (q) {
+    filtered = filtered.filter(c =>
+      (c.title || '').toLowerCase().includes(q) ||
+      courseDescText(c).toLowerCase().includes(q) ||
+      (c.tags && c.tags.some(t => t.toLowerCase().includes(q)))
+    );
+  }
+  renderCourses(filtered);
+}
+
+function renderCourses(courses) {
+  const grid = document.getElementById('coursesGrid');
+  document.getElementById('countNumCourses').textContent = courses.length;
+  if (courses.length === 0) {
+    grid.innerHTML = `<div class="no-results show"><div class="no-results-icon">🔭</div><p>لا توجد دورات مطابقة</p></div>`;
+    return;
+  }
+  grid.innerHTML = courses.map((c, i) => {
+    const meta = [];
+    if (c.level) meta.push(c.level);
+    if (c.duration) meta.push(c.duration);
+    if (c.price) meta.push(c.price);
+    const hasCurriculum = Array.isArray(c.curriculum) && c.curriculum.length;
+    const hasReviews = (Array.isArray(c.reviews) && c.reviews.length) || (Array.isArray(c.testimonialVideos) && c.testimonialVideos.length);
+    return `
+    <div class="project-card" onclick="openCourseModal(${c.id})" style="animation-delay:${i*0.06}s">
+      ${c.images && c.images[0]
+        ? `<img class="card-img" src="${c.images[0]}" alt="${esc(c.title)}" loading="lazy">`
+        : `<div class="card-img-placeholder">🎓</div>`}
+      <div class="card-body">
+        <div class="card-category">${esc(c.category || 'دورة تدريبية')}</div>
+        <div class="card-title">${esc(c.title)}</div>
+        <div class="card-desc">${esc(courseDescText(c).replace(/\n+/g,' '))}</div>
+        ${meta.length ? `<div class="card-meta">${meta.map(m=>`<span class="meta-chip">${esc(m)}</span>`).join('')}</div>` : ''}
+        <div class="card-tags">${(c.tags||[]).slice(0,4).map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>
+      </div>
+      <div class="card-footer">
+        ${hasCurriculum ? `<span class="has-curriculum">📘 منهاج</span>` : ''}
+        ${hasReviews ? `<span class="has-reviews">⭐ آراء الطلاب</span>` : ''}
+        <span class="card-arrow">← عرض التفاصيل</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function openCourseModal(id) {
+  const c = allCourses.find(x => x.id === id);
+  if (!c) return;
+
+  const images = (c.images || []).filter(Boolean);
+  const galleryHTML = images.length === 0
+    ? `<div class="modal-img-placeholder">🎓</div>`
+    : images.length === 1
+      ? `<img class="modal-img" src="${images[0]}" alt="${esc(c.title)}">`
+      : `<div class="course-gallery">${images.map(img => `<img src="${img}" alt="${esc(c.title)}">`).join('')}</div>`;
+
+  const metaChips = [];
+  if (c.level) metaChips.push(`🎯 ${esc(c.level)}`);
+  if (c.duration) metaChips.push(`⏱️ ${esc(c.duration)}`);
+  if (c.sessions) metaChips.push(`📅 ${esc(c.sessions)}`);
+  if (c.price) metaChips.push(`💳 ${esc(c.price)}`);
+
+  const ytId = getYoutubeId(c.youtube);
+
+  // Overview tab
+  const overviewHTML = `
+    ${metaChips.length ? `<div class="course-meta-row">${metaChips.map(m=>`<span class="meta-chip-lg">${m}</span>`).join('')}</div>` : ''}
+    <div class="modal-desc">${courseDescHTML(c) || '<span class="tab-empty">لا يوجد وصف لهذه الدورة بعد</span>'}</div>
+    <div class="modal-tags">${(c.tags||[]).map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>
+    ${ytId ? `<div class="youtube-wrap"><iframe src="https://www.youtube.com/embed/${ytId}" allowfullscreen allow="autoplay; encrypted-media"></iframe></div>` : ''}
+    <div class="modal-links">
+      ${c.youtube ? `<a href="${c.youtube}" target="_blank" class="modal-link-btn btn-yt">▶ شاهد على يوتيوب</a>` : ''}
+      ${c.instagram ? `<a href="${c.instagram}" target="_blank" class="modal-link-btn btn-ig">📸 إنستغرام</a>` : ''}
+    </div>`;
+
+  // Curriculum tab
+  const curriculum = Array.isArray(c.curriculum) ? c.curriculum : [];
+  const curriculumHTML = curriculum.length === 0
+    ? `<div class="tab-empty">لم يُنشر منهاج مفصّل لهذه الدورة بعد</div>`
+    : curriculum.map((m, idx) => `
+      <details class="curriculum-module" ${idx===0 ? 'open':''}>
+        <summary>${esc(m.title || ('الوحدة ' + (idx+1)))}</summary>
+        <ul class="curriculum-topics">
+          ${(m.topics||[]).map(t => `<li>${esc(t)}</li>`).join('') || '<li>لا توجد تفاصيل إضافية</li>'}
+        </ul>
+      </details>`).join('');
+
+  // Reviews / videos tab
+  const reviews = Array.isArray(c.reviews) ? c.reviews : [];
+  const videos = Array.isArray(c.testimonialVideos) ? c.testimonialVideos : [];
+  const videosHTML = videos.map(v => {
+    const vid = getYoutubeId(v.youtube || v.url);
+    if (!vid) return '';
+    return `<div class="testimonial-video">
+      ${v.title ? `<div class="testimonial-video-title">${esc(v.title)}</div>` : ''}
+      <div class="youtube-wrap"><iframe src="https://www.youtube.com/embed/${vid}" allowfullscreen allow="autoplay; encrypted-media"></iframe></div>
+    </div>`;
+  }).join('');
+  const reviewsHTML = reviews.map(r => `
+    <div class="review-card">
+      <div class="review-head">
+        <span class="review-name">${esc(r.name || 'طالب')}</span>
+        ${r.rating ? `<span class="review-stars">${starsHTML(r.rating)}</span>` : ''}
+      </div>
+      <div class="review-text">${esc(r.text || '')}</div>
+    </div>`).join('');
+  const reviewsTabHTML = (videosHTML || reviewsHTML)
+    ? (videosHTML + reviewsHTML)
+    : `<div class="tab-empty">لا توجد آراء أو فيديوهات لطلاب هذه الدورة بعد</div>`;
+
+  document.getElementById('courseModalContent').innerHTML = `
+    ${galleryHTML}
+    <div class="modal-body">
+      <div class="modal-category">${esc(c.category || 'دورة تدريبية')}</div>
+      <div class="modal-title">${esc(c.title)}</div>
+      <div class="course-tabs">
+        <button class="tab-btn active" data-tab="overview" onclick="switchCourseTab('overview', this)">نظرة عامة</button>
+        <button class="tab-btn" data-tab="curriculum" onclick="switchCourseTab('curriculum', this)">منهاج الدورة</button>
+        <button class="tab-btn" data-tab="reviews" onclick="switchCourseTab('reviews', this)">آراء الطلاب</button>
+      </div>
+      <div class="tab-panel active" data-panel="overview">${overviewHTML}</div>
+      <div class="tab-panel" data-panel="curriculum">${curriculumHTML}</div>
+      <div class="tab-panel" data-panel="reviews">${reviewsTabHTML}</div>
+    </div>`;
+
+  document.getElementById('courseModalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function switchCourseTab(tab, btn) {
+  const modal = document.getElementById('courseModalContent');
+  modal.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  modal.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  modal.querySelector(`.tab-panel[data-panel="${tab}"]`).classList.add('active');
+}
+
+function closeCourseModal() {
+  const overlay = document.getElementById('courseModalOverlay');
+  if (!overlay.classList.contains('open')) return;
+  overlay.classList.remove('open');
+  document.body.style.overflow = '';
+  document.querySelectorAll('#courseModalContent .youtube-wrap iframe').forEach(f => f.src = f.src);
+}
+function closeCourseModalOutside(e) { if (e.target === document.getElementById('courseModalOverlay')) closeCourseModal(); }
 
 // Particles
 const canvas = document.getElementById('particles');
@@ -1069,6 +1423,7 @@ function draw() {
 if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) draw();
 
 loadProjects();
+loadCourses();
 </script>
 
 </body>
