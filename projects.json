@@ -54,18 +54,15 @@
     "id": 4,
     "title": "سيارة تحكم عن بعد بالبلوتوث",
     "category": "ميكاترونكس",
-    "description": "سيارة مبنية على ESP32 مع DRV8833 وحساسات التوقف التلقائي عن العوائق والتحكم بها عبر تطبيق Android أو واجهة C# WinForms.",
-    "images": [
-      "https://images.unsplash.com/photo-1563396983906-b3795482a59a?w=800"
+    "description": [
+      "سيارة مبنية على ESP32 مع DRV8833 وحساسات التوقف التلقائي عن العوائق والتحكم بها عبر تطبيق Android أو واجهة C# WinForms."
     ],
-    "youtube": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    "images": [
+      "images/images-47508.jpg"
+    ],
+    "youtube": "",
     "instagram": "",
-    "tags": [
-      "ESP32",
-      "Android",
-      "C#",
-      "DRV8833"
-    ]
+    "tags": []
   },
   {
     "id": 5,
