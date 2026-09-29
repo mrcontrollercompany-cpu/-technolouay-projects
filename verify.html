@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>التحقق من الشهادة — TechnoLouay Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #050810;
+  --bg2: #090e1a;
+  --bg3: #0d1526;
+  --accent: #00d4ff;
+  --accent2: #7c3aed;
+  --accent3: #06ffa5;
+  --danger: #ff6b6b;
+  --text: #e2e8f0;
+  --muted: #64748b;
+  --card-bg: rgba(13,21,38,0.8);
+  --border: rgba(0,212,255,0.15);
+  --border-hover: rgba(0,212,255,0.4);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Cairo', sans-serif;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+  animation: gridMove 20s linear infinite;
+}
+@keyframes gridMove { 0% { background-position: 0 0; } 100% { background-position: 60px 60px; } }
+
+/* ===== NAV ===== */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 16px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(5,8,16,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.logo {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 2px;
+  text-shadow: 0 0 20px rgba(0,212,255,0.5);
+  cursor: pointer;
+  text-decoration: none;
+}
+.logo span { color: var(--accent3); }
+.nav-link {
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 8px 16px;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  transition: all 0.3s;
+}
+.nav-link:hover { color: var(--accent); border-color: var(--border-hover); }
+
+/* ===== PAGE HEADER ===== */
+.page-header {
+  position: relative;
+  z-index: 1;
+  padding: 130px 24px 50px;
+  text-align: center;
+}
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+}
+.orb-1 { width: 450px; height: 450px; background: radial-gradient(circle, rgba(0,212,255,0.14), transparent 70%); top: -120px; right: -80px; }
+.orb-2 { width: 380px; height: 380px; background: radial-gradient(circle, rgba(124,58,237,0.16), transparent 70%); top: -60px; left: -80px; }
+
+.page-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 18px;
+  border: 1px solid rgba(0,212,255,0.3);
+  border-radius: 100px;
+  font-size: 0.78rem;
+  color: var(--accent);
+  background: rgba(0,212,255,0.05);
+  margin-bottom: 22px;
+  letter-spacing: 0.5px;
+  position: relative;
+  z-index: 2;
+}
+.page-title {
+  font-family: 'Orbitron', monospace;
+  font-weight: 900;
+  font-size: clamp(1.7rem, 5vw, 2.7rem);
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 2;
+}
+.page-title span {
+  background: linear-gradient(135deg, var(--accent), var(--accent2), var(--accent3));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.page-desc {
+  color: var(--muted);
+  font-size: clamp(0.9rem, 2vw, 1.02rem);
+  line-height: 1.9;
+  max-width: 620px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* ===== COURSES GRID ===== */
+.courses-wrap { position: relative; z-index: 1; padding: 10px 24px 70px; }
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.course-card {
+  display: block;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 26px 22px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.35s;
+  text-decoration: none;
+  color: var(--text);
+}
+.course-card.available { cursor: pointer; }
+.course-card.available:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.4), 0 0 0 1px rgba(0,212,255,0.08);
+}
+.course-card.soon { opacity: 0.6; cursor: default; }
+.course-icon { font-size: 2.1rem; margin-bottom: 14px; }
+.course-badge {
+  position: absolute; top: 18px; left: 18px;
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.5px;
+  padding: 4px 12px; border-radius: 100px;
+}
+.course-badge.open { background: rgba(6,255,165,0.12); border: 1px solid rgba(6,255,165,0.35); color: var(--accent3); }
+.course-badge.soon { background: rgba(100,116,139,0.15); border: 1px solid rgba(100,116,139,0.35); color: var(--muted); }
+.course-name { font-size: 1.08rem; font-weight: 800; margin-bottom: 10px; line-height: 1.5; }
+.course-summary { font-size: 0.84rem; color: var(--muted); line-height: 1.8; margin-bottom: 16px; }
+.course-meta { display: flex; flex-wrap: wrap; gap: 8px; }
+.meta-chip {
+  padding: 4px 12px; background: rgba(0,212,255,0.07);
+  border: 1px solid rgba(0,212,255,0.15); border-radius: 100px;
+  font-size: 0.7rem; color: var(--accent);
+}
+.course-cta { margin-top: 18px; font-size: 0.8rem; color: var(--accent); display: flex; align-items: center; gap: 6px; }
+.course-card.available:hover .course-cta { gap: 10px; }
+
+/* ===== CERTIFICATE VERIFICATION ===== */
+.verify-wrap { position: relative; z-index: 1; padding: 130px 24px 90px; min-height: calc(100vh - 90px); }
+.verify-card {
+  max-width: 640px; margin: 0 auto;
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 18px; padding: 44px 36px; text-align: center;
+  position: relative; overflow: hidden;
+}
+.verify-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent3), transparent);
+  opacity: 0.5;
+}
+.verify-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 5px 16px; border: 1px solid rgba(6,255,165,0.3); border-radius: 100px;
+  font-size: 0.75rem; color: var(--accent3); background: rgba(6,255,165,0.06);
+  margin-bottom: 18px; letter-spacing: 1px;
+}
+.verify-title { font-family: 'Orbitron', monospace; font-weight: 900; font-size: clamp(1.3rem, 3vw, 1.8rem); margin-bottom: 12px; }
+.verify-title span {
+  background: linear-gradient(135deg, var(--accent3), var(--accent));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.verify-desc { color: var(--muted); font-size: 0.9rem; line-height: 1.8; margin-bottom: 28px; }
+.verify-form { display: flex; gap: 10px; flex-wrap: wrap; }
+.verify-form input {
+  flex: 1; min-width: 200px; padding: 13px 18px;
+  background: var(--bg2); border: 1px solid var(--border); border-radius: 8px;
+  color: var(--text); font-family: 'Cairo', sans-serif; font-size: 0.92rem;
+  outline: none; text-align: center; letter-spacing: 0.5px; transition: border-color 0.3s;
+}
+.verify-form input::placeholder { color: var(--muted); }
+.verify-form input:focus { border-color: var(--accent3); box-shadow: 0 0 20px rgba(6,255,165,0.12); }
+.btn-verify {
+  padding: 13px 30px;
+  background: linear-gradient(135deg, var(--accent3), var(--accent));
+  color: var(--bg); border: none; border-radius: 8px;
+  font-family: 'Cairo', sans-serif; font-size: 0.92rem; font-weight: 700;
+  cursor: pointer; transition: all 0.3s; white-space: nowrap;
+}
+.btn-verify:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(6,255,165,0.3); }
+.verify-hint { font-size: 0.72rem; color: var(--muted); margin-top: 14px; }
+
+.verify-result { max-width: 640px; margin: 22px auto 0; display: none; }
+.verify-result.show { display: block; animation: fadeUp 0.4s ease both; }
+
+.result-card {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 18px; padding: 40px 32px; text-align: center;
+}
+.result-card.ok { border-color: rgba(6,255,165,0.35); }
+.result-card.fail { border-color: rgba(255,107,107,0.35); }
+.result-icon { font-size: 3.2rem; margin-bottom: 10px; }
+.result-icon.ok { color: var(--accent3); }
+.result-icon.fail { color: var(--danger); }
+.result-name { font-size: 1.25rem; font-weight: 800; margin: 10px 0; }
+.result-meta { color: var(--muted); font-size: 0.9rem; line-height: 1.9; margin-bottom: 22px; }
+.result-back {
+  display: inline-block; margin-top: 16px; font-size: 0.78rem;
+  color: var(--muted); text-decoration: underline; cursor: pointer; border: none; background: none;
+  font-family: 'Cairo', sans-serif;
+}
+
+.verify-spinner {
+  width: 34px; height: 34px; border: 3px solid rgba(6,255,165,0.15);
+  border-top-color: var(--accent3); border-radius: 50%; animation: spin 0.8s linear infinite;
+  margin: 0 auto 16px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+/* ===== FOOTER ===== */
+footer {
+  position: relative; z-index: 1;
+  border-top: 1px solid var(--border);
+  padding: 24px 32px; text-align: center;
+  background: rgba(5,8,16,0.6);
+}
+.footer-logo { font-family: 'Orbitron', monospace; font-size: 0.9rem; color: var(--accent); letter-spacing: 2px; margin-bottom: 8px; }
+.footer-copy { font-size: 0.72rem; color: var(--muted); }
+
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+@media (max-width: 600px) {
+  nav { padding: 14px 18px; }
+  .page-header { padding: 110px 18px 40px; }
+  .verify-card { padding: 32px 22px; }
+  .result-card { padding: 30px 20px; }
+  .verify-form { flex-direction: column; }
+  .btn-verify { width: 100%; justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="logo">TECHNO<span>LOUAY</span></a>
+  <div style="display:flex;gap:10px;"><a href="courses.html" class="nav-link">🎓 الدورات</a><a href="index.html" class="nav-link">← الرئيسية</a></div>
+</nav>
+
+<!-- CERTIFICATE VERIFICATION -->
+<section class="verify-wrap" id="verify">
+  <div class="verify-card">
+    <span class="verify-tag">🛡️ نظام توثيق رسمي</span>
+    <h2 class="verify-title">تحقق من صحة <span>شهادتك</span></h2>
+    <p class="verify-desc">
+      أدخل رقم الشهادة المطبوع عليها أو بجانب رمز QR للتأكد من صدورها عن TechnoLouay Academy.
+    </p>
+    <form class="verify-form" onsubmit="verifyCertificate(event)">
+      <input type="text" id="certId" placeholder="مثال: TLA-2026-080524" autocomplete="off">
+      <button type="submit" class="btn-verify">🔍 تحقق الآن</button>
+    </form>
+    <div class="verify-hint">الرقم موجود أسفل الشهادة أو ضمن رمز QR الخاص بها</div>
+  </div>
+
+  <div class="verify-result" id="certResultWrap"></div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">TECHNOLOUAY</div>
+  <div class="footer-copy">© 2025 TechnoLouay Academy · جميع الحقوق محفوظة</div>
+</footer>
+
+<script>
+// ===== CERTIFICATE VERIFICATION (بدون iframe — عرض مباشر بتصميم الموقع) =====
+const CERT_VERIFY_URL = 'https://script.google.com/macros/s/AKfycbxwxJ77_g5KBCgm98t28f1HQkjf9rAKbrUREKkx3XOwi0kIiCyNGfe5sixe_qS7MwQ/exec';
+
+function esc(s){ return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+async function verifyCertificate(e, presetId) {
+  if (e) e.preventDefault();
+  const input = document.getElementById('certId');
+  const id = (presetId || input.value).trim();
+  if (!id) { input.focus(); return; }
+  input.value = id;
+
+  const wrap = document.getElementById('certResultWrap');
+  wrap.classList.add('show');
+  wrap.innerHTML = `
+    <div class="result-card">
+      <div class="verify-spinner"></div>
+      <div style="color:var(--muted);">جارِ التحقق من الشهادة...</div>
+    </div>`;
+  wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  try {
+    const res = await fetch(CERT_VERIFY_URL + '?format=json&id=' + encodeURIComponent(id));
+    const data = await res.json();
+
+    if (data && data.name) {
+      wrap.innerHTML = `
+        <div class="result-card ok">
+          <div class="result-icon ok">✓</div>
+          <h3>شهادة موثقة</h3>
+          <div class="result-name">${esc(data.name)}</div>
+          <div class="result-meta">الدورة: ${esc(data.course)}<br>التاريخ: ${esc(data.date)}</div>
+          ${data.image ? `<a href="${esc(data.image)}" target="_blank" rel="noopener" class="btn-verify" style="display:inline-block;text-decoration:none;">📄 عرض صورة الشهادة</a>` : ''}
+          <br>
+          <button class="result-back" onclick="resetVerify()">بحث عن رقم آخر</button>
+        </div>`;
+    } else {
+      wrap.innerHTML = `
+        <div class="result-card fail">
+          <div class="result-icon fail">✕</div>
+          <h3>عذراً، الرقم غير موجود</h3>
+          <div class="result-meta">تأكد من كتابة الرمز بشكل صحيح وحاول مجدداً.</div>
+          <button class="result-back" onclick="resetVerify()">إعادة المحاولة</button>
+        </div>`;
+    }
+  } catch (err) {
+    wrap.innerHTML = `
+      <div class="result-card fail">
+        <div class="result-icon fail">⚠️</div>
+        <h3>حدث خطأ بالاتصال</h3>
+        <div class="result-meta">تأكد من اتصالك بالإنترنت وحاول مجدداً.</div>
+        <button class="result-back" onclick="resetVerify()">إعادة المحاولة</button>
+      </div>`;
+  }
+}
+
+function resetVerify() {
+  document.getElementById('certResultWrap').classList.remove('show');
+  document.getElementById('certId').value = '';
+  document.getElementById('certId').focus();
+}
+
+// تشغيل تلقائي إذا فُتحت الصفحة برابط شهادة، مثل ?id=TLA-2026-080524
+(function checkCertFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  const certParam = params.get('cert') || params.get('id');
+  if (certParam) verifyCertificate(null, certParam);
+})();
+</script>
+</body>
+</html>
