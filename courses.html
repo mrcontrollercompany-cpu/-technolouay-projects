@@ -282,7 +282,10 @@ footer {
 <!-- NAV -->
 <nav>
   <a href="index.html" class="logo">TECHNO<span>LOUAY</span></a>
-  <a href="index.html" class="nav-link">← الصفحة الرئيسية</a>
+  <div style="display:flex;gap:10px;">
+    <a href="verify.html" class="nav-link">📜 تحقق من شهادة</a>
+    <a href="index.html" class="nav-link">← الرئيسية</a>
+  </div>
 </nav>
 
 <!-- PAGE HEADER -->
@@ -340,24 +343,6 @@ footer {
   </div>
 </section>
 
-<!-- CERTIFICATE VERIFICATION -->
-<section class="verify-wrap" id="verify">
-  <div class="verify-card">
-    <span class="verify-tag">🛡️ نظام توثيق رسمي</span>
-    <h2 class="verify-title">تحقق من صحة <span>شهادتك</span></h2>
-    <p class="verify-desc">
-      أدخل رقم الشهادة المطبوع عليها أو بجانب رمز QR للتأكد من صدورها عن TechnoLouay Academy.
-    </p>
-    <form class="verify-form" onsubmit="verifyCertificate(event)">
-      <input type="text" id="certId" placeholder="مثال: TLA-2026-080524" autocomplete="off">
-      <button type="submit" class="btn-verify">🔍 تحقق الآن</button>
-    </form>
-    <div class="verify-hint">الرقم موجود أسفل الشهادة أو ضمن رمز QR الخاص بها</div>
-  </div>
-
-  <div class="verify-result" id="certResultWrap"></div>
-</section>
-
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">TECHNOLOUAY</div>
@@ -365,73 +350,11 @@ footer {
 </footer>
 
 <script>
-// ===== CERTIFICATE VERIFICATION (بدون iframe — عرض مباشر بتصميم الموقع) =====
-const CERT_VERIFY_URL = 'https://script.google.com/macros/s/AKfycbxwxJ77_g5KBCgm98t28f1HQkjf9rAKbrUREKkx3XOwi0kIiCyNGfe5sixe_qS7MwQ/exec';
-
-function esc(s){ return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-
-async function verifyCertificate(e, presetId) {
-  if (e) e.preventDefault();
-  const input = document.getElementById('certId');
-  const id = (presetId || input.value).trim();
-  if (!id) { input.focus(); return; }
-  input.value = id;
-
-  const wrap = document.getElementById('certResultWrap');
-  wrap.classList.add('show');
-  wrap.innerHTML = `
-    <div class="result-card">
-      <div class="verify-spinner"></div>
-      <div style="color:var(--muted);">جارِ التحقق من الشهادة...</div>
-    </div>`;
-  wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-  try {
-    const res = await fetch(CERT_VERIFY_URL + '?format=json&id=' + encodeURIComponent(id));
-    const data = await res.json();
-
-    if (data && data.name) {
-      wrap.innerHTML = `
-        <div class="result-card ok">
-          <div class="result-icon ok">✓</div>
-          <h3>شهادة موثقة</h3>
-          <div class="result-name">${esc(data.name)}</div>
-          <div class="result-meta">الدورة: ${esc(data.course)}<br>التاريخ: ${esc(data.date)}</div>
-          ${data.image ? `<a href="${esc(data.image)}" target="_blank" rel="noopener" class="btn-verify" style="display:inline-block;text-decoration:none;">📄 عرض صورة الشهادة</a>` : ''}
-          <br>
-          <button class="result-back" onclick="resetVerify()">بحث عن رقم آخر</button>
-        </div>`;
-    } else {
-      wrap.innerHTML = `
-        <div class="result-card fail">
-          <div class="result-icon fail">✕</div>
-          <h3>عذراً، الرقم غير موجود</h3>
-          <div class="result-meta">تأكد من كتابة الرمز بشكل صحيح وحاول مجدداً.</div>
-          <button class="result-back" onclick="resetVerify()">إعادة المحاولة</button>
-        </div>`;
-    }
-  } catch (err) {
-    wrap.innerHTML = `
-      <div class="result-card fail">
-        <div class="result-icon fail">⚠️</div>
-        <h3>حدث خطأ بالاتصال</h3>
-        <div class="result-meta">تأكد من اتصالك بالإنترنت وحاول مجدداً.</div>
-        <button class="result-back" onclick="resetVerify()">إعادة المحاولة</button>
-      </div>`;
-  }
-}
-
-function resetVerify() {
-  document.getElementById('certResultWrap').classList.remove('show');
-  document.getElementById('certId').value = '';
-  document.getElementById('certId').focus();
-}
-
-// تشغيل تلقائي إذا فُتحت الصفحة برابط شهادة، مثل ?id=TLA-2026-080524
-(function checkCertFromURL() {
-  const params = new URLSearchParams(window.location.search);
-  const certParam = params.get('cert') || params.get('id');
-  if (certParam) verifyCertificate(null, certParam);
+// توجيه روابط الشهادات إلى صفحة التحقق
+(function redirectCert() {
+  const p = new URLSearchParams(location.search);
+  const id = p.get('cert') || p.get('id');
+  if (id) location.replace('verify.html?id=' + encodeURIComponent(id));
 })();
 </script>
 </body>
