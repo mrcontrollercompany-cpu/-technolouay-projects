@@ -345,31 +345,6 @@ nav {
   box-shadow: 0 0 14px rgba(0,212,255,0.3);
 }
 
-.share-bar {
-  display: none; align-items: center; gap: 8px;
-  width: 100%; max-width: 520px;
-  padding: 8px 10px;
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-}
-.share-bar.show { display: flex; }
-.share-bar input {
-  flex: 1; min-width: 0;
-  background: transparent; border: none; outline: none;
-  color: var(--accent);
-  font-family: 'Cairo', sans-serif; font-size: 0.78rem;
-  direction: ltr; text-align: left;
-}
-.share-bar button {
-  flex-shrink: 0;
-  padding: 6px 14px;
-  background: var(--accent); color: var(--bg);
-  border: none; border-radius: 8px;
-  font-family: 'Cairo', sans-serif; font-size: 0.78rem; font-weight: 700;
-  cursor: pointer; transition: all 0.3s;
-}
-.share-bar button.done { background: var(--accent3); }
 .projects-count { font-size: 0.78rem; color: var(--muted); margin-bottom: 24px; text-align: center; }
 .projects-count span { color: var(--accent); font-family: 'Orbitron', monospace; }
 
@@ -678,10 +653,6 @@ footer {
       <button class="filter-btn" onclick="setFilter('طاقة', this)">⚡ طاقة</button>
       <button class="filter-btn" onclick="setFilter('حواسيب', this)">💻 حواسيب</button>
     </div>
-    <div class="share-bar" id="shareBar">
-      <input type="text" id="shareLink" readonly onclick="this.select()">
-      <button id="shareBtn" onclick="copyShareLink()">📋 نسخ الرابط</button>
-    </div>
   </div>
 
   <div class="projects-count">عرض <span id="countNum">0</span> مشروع</div>
@@ -773,11 +744,6 @@ function applyFilter(cat) {
   currentFilter = cat;
   const all = ['الكل'].concat(Object.keys(catSlugs));
   document.querySelectorAll('.filter-btn').forEach((b,i) => b.classList.toggle('active', all[i] === cat));
-  const bar = document.getElementById('shareBar');
-  if (cat !== 'الكل') {
-    document.getElementById('shareLink').value = location.origin + location.pathname + '#cat-' + catSlugs[cat];
-    bar.classList.add('show');
-  } else bar.classList.remove('show');
   filterProjects();
 }
 
@@ -786,17 +752,6 @@ function setFilter(cat, btn) {
   history.replaceState(null, '', catHash());
 }
 
-function copyShareLink() {
-  const inp = document.getElementById('shareLink');
-  const btn = document.getElementById('shareBtn');
-  const ok = () => {
-    btn.textContent = '✓ تم النسخ'; btn.classList.add('done');
-    setTimeout(() => { btn.textContent = '📋 نسخ الرابط'; btn.classList.remove('done'); }, 1800);
-  };
-  const fallback = () => { inp.select(); inp.setSelectionRange(0, 9999); try { document.execCommand('copy'); ok(); } catch(e) {} };
-  if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(inp.value).then(ok, fallback);
-  else fallback();
-}
 
 function filterProjects() {
   const q = document.getElementById('searchInput').value.trim().toLowerCase();
